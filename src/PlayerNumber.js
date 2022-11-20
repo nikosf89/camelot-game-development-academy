@@ -132,7 +132,7 @@ export class PlayerNumber{
                     this.holder1Sprite.zIndex = 2;
                     this.container.addChild(this.holder1Sprite);
 
-                    if (Math.random() < 0.00002){
+                    if (Math.random() < 0.2){
                         this.number = null;
                         this.symbol = Math.floor(Math.random() * 3 + 1);
                         this.symbolSprite = new PIXI.Sprite(Globals.resources[`symbol${this.symbol}`].texture);
@@ -278,6 +278,31 @@ export class PlayerNumber{
         Globals.mainScene.finish.anchor.set(0.5)
         Globals.mainScene.finish.x = Globals.centerX;
         Globals.mainScene.finish.y = Globals.height - 100;
+
+        if (Globals.moneyWon > 0 && Globals.moneyWon <= 20){
+            this.winMessage = new PIXI.Sprite(Globals.resources.esText1.texture);
+        }
+
+        else if (Globals.moneyWon > 20 && Globals.moneyWon <= 300){
+            this.winMessage = new PIXI.Sprite(Globals.resources.esText2.texture);
+        }
+
+        else if (Globals.moneyWon > 300 && Globals.moneyWon <= 6000){
+            this.winMessage = new PIXI.Sprite(Globals.resources.esText3.texture);
+        }
+
+        else if (Globals.moneyWon > 6000 && Globals.moneyWon <= 200000){
+            this.winMessage = new PIXI.Sprite(Globals.resources.esText4.texture);
+        }
+
+        else{
+            this.winMessage = new PIXI.Sprite(Globals.resources.esText5.texture);
+        }
+
+        this.winMessage.anchor.set(0.5, 1);
+        this.winMessage.x = Globals.centerX;
+        this.winMessage.y = Globals.centerY;
+        Globals.mainScene.container.addChild(this.winMessage);
 
     }
 
