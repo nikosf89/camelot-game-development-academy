@@ -4,6 +4,8 @@ import { PixiPlugin } from "gsap/PixiPlugin";
 import Loader from "./Loader";
 import ResizeHandler from "./ResizeHandler";
 import { store } from "./store";
+import {Globals} from "./Globals";
+import { MainScene } from "./MainScene";
 
 export default class App {
 
@@ -40,6 +42,22 @@ export default class App {
 
         const bg = new PIXI.Sprite(resources.bg.texture);
         this._app.stage.addChild(bg);
+
+        //Define a global object that all files
+        //will have access to.
+        Globals.resources = resources;
+        Globals.centerX = this._app.stage.width/2;
+        Globals.centerY = this._app.stage.height/2;
+        Globals.width = this._app.stage.width
+        Globals.height = this._app.stage.height;
+        Globals.winningBoxesPressed = 0;
+        Globals.playerBoxesPressed = 0;
+        Globals.moneyWon = 0;
+        Globals.winningNumbers = [];
+
+        Globals.mainScene = new MainScene();
+        this._app.stage.addChild(Globals.mainScene.container);
+
     }
 
     _state() {
