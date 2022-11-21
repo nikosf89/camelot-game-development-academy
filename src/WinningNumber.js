@@ -19,9 +19,9 @@ export class WinningNumber{
 
         this.container.addChild(this.numberBoxSprite);
         this.numberBoxSprite.interactive = true;
-        this.numberBoxSprite.hitArea = new PIXI.Rectangle(-50, -75/2, 100, 75)
+        this.numberBoxSprite.hitArea = new PIXI.Rectangle(-50, -75/2, 100, 75);
         this.numberBoxSprite.buttonMode = true;
-        this.numberBoxSprite.anchor.set(0.5)
+        this.numberBoxSprite.anchor.set(0.5);
 
         
 
@@ -54,8 +54,7 @@ export class WinningNumber{
     }
 
 
-    onhover(){
-        
+    onhover(){   
         this.numberBoxSprite.on("pointerover", () => {
             if (!this.isPressed){
                 this.hilight = new PIXI.Sprite(Globals.resources.boxHilight.texture);
@@ -80,13 +79,14 @@ export class WinningNumber{
                     particle2.scale.set(0.5)
                     this.numberBoxSprite.addChild(particle, particle2);
                     this.questionMark = gsap.to(particle2, {y: -40, duration: 1, onComplete: () => {particle2.destroy()} });
-                    this.ball = gsap.to(particle, {y: -40, duration: 1, onComplete: () => {particle.destroy()}});
+                    this.particle = gsap.to(particle, {y: -40, duration: 1, onComplete: () => {particle.destroy()}});
                 
                 }, 500);
             }
         
         })    
     }
+
 
     onout(){
         this.numberBoxSprite.on("pointerout", () => {
@@ -100,7 +100,6 @@ export class WinningNumber{
 
 
     onPressed(){
-        
         this.numberBoxSprite.on("pointerdown", () => {
             if (!this.isPressed){
                 this.isPressed = true;
@@ -142,9 +141,8 @@ export class WinningNumber{
             }
                 
                 
-        })
+        })          
+    }
 
-          
-}
 
 }

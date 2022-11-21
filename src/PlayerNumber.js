@@ -21,7 +21,7 @@ export class PlayerNumber{
         this.container.addChild(this.numberBoxSprite);
         this.numberBoxSprite.interactive = true;
         this.numberBoxSprite.anchor.set(0.5)
-        this.numberBoxSprite.hitArea = new PIXI.Rectangle(-50, -75/2, 100, 75)
+        this.numberBoxSprite.hitArea = new PIXI.Rectangle(-50, -75/2, 100, 75);
         this.numberBoxSprite.buttonMode = true;
 
         this.createRotation();
@@ -53,8 +53,7 @@ export class PlayerNumber{
     }
 
 
-    onHover(){
-        
+    onHover(){ 
         this.numberBoxSprite.on("pointerover", () => {
             if (!this.isPressed){
                 this.hilight = new PIXI.Sprite(Globals.resources.boxHilight.texture);
@@ -80,7 +79,7 @@ export class PlayerNumber{
                     particle2.scale.set(0.5)
                     this.numberBoxSprite.addChild(particle, particle2);
                     this.questionMark = gsap.to(particle2, {y: -40, duration: 1, onComplete: () => {particle2.destroy()} });
-                    this.ball = gsap.to(particle, {y: -40, duration: 1, onComplete: () => {particle.destroy()}});
+                    this.particle = gsap.to(particle, {y: -40, duration: 1, onComplete: () => {particle.destroy()}});
                 
                 }, 500);
             }
@@ -109,6 +108,7 @@ export class PlayerNumber{
                     this.isPressed = true;
                     Globals.playerBoxesPressed++;
 
+        
                     this.prizeAmount = amountArray[Math.floor(Math.random() * amountArray.length)];
                     this.prizeAmountText = new PIXI.Text("€" + this.prizeAmount);
                     this.prizeAmountText.style = {
@@ -117,12 +117,12 @@ export class PlayerNumber{
                         align: "center",
                         fontFamily: "Helvetica"
                     };
-
                     this.container.addChild(this.prizeAmountText);
                     this.prizeAmountText.anchor.set(0.5, 1);
                     this.prizeAmountText.zIndex = 2;
                     this.prizeAmountText.x = 0
                     this.prizeAmountText.y = 40
+
 
                     this.holder1Sprite = new PIXI.Sprite(Globals.resources.holder1.texture);
                     this.holder1Sprite.anchor.set(0.5);
@@ -132,7 +132,7 @@ export class PlayerNumber{
                     this.holder1Sprite.zIndex = 2;
                     this.container.addChild(this.holder1Sprite);
 
-                    if (Math.random() < 0.2){
+                    if (Math.random() < 0.01){
                         this.number = null;
                         this.symbol = Math.floor(Math.random() * 3 + 1);
                         this.symbolSprite = new PIXI.Sprite(Globals.resources[`symbol${this.symbol}`].texture);
@@ -304,6 +304,18 @@ export class PlayerNumber{
         this.winMessage.y = Globals.centerY;
         Globals.mainScene.container.addChild(this.winMessage);
 
+        this.moneyWonText = new PIXI.Text("€" + String(Globals.moneyWon));
+        this.moneyWonText.style = {
+            fontSize: 150,
+            fill: 0xffffff,
+            align: "center",
+            fontFamily: "Helvetica"
+        };
+        this.moneyWonText.anchor.set(0.5, 0);
+        this.moneyWonText.x = Globals.centerX;
+        this.moneyWonText.y = Globals.centerY;
+        Globals.mainScene.container.addChild(this.moneyWonText);
+            
     }
 
 

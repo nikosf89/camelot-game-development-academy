@@ -55,9 +55,10 @@ export default class App {
         Globals.moneyWon = 0;
         Globals.winningNumbers = [];
 
+        //The mainscene object container contains everything on the screen except background.
         Globals.mainScene = new MainScene();
         this._app.stage.addChild(Globals.mainScene.container);
-
+        
     }
 
     _state() {

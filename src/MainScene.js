@@ -3,8 +3,6 @@ import {Globals} from "./Globals";
 import { WinningNumber } from "./WinningNumber";
 import { PlayerNumber } from "./PlayerNumber";
 
-const min = 1;
-const max = 100;
 
 export class MainScene{
 
@@ -57,9 +55,11 @@ export class MainScene{
     createGameHolder(){
         this.gameHolderContainer = new PIXI.Container();
         this.gameHolderSprite = new PIXI.Sprite(Globals.resources.gameHolder.texture);
+
         this.gameHolderContainer.addChild(this.gameHolderSprite);
         this.container.addChild(this.gameHolderContainer);
         this.gameHolderSprite.anchor.set(0.5, 0);
+        
         this.gameHolderSprite.x = Globals.centerX;
         this.gameHolderSprite.y = this.logoSprite.y + this.logoSprite.height;
 
