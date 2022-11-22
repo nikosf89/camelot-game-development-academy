@@ -52,6 +52,14 @@ import g2Shimmer29 from "./assets/shimmer-png-sequences/g2-shimmer-2-9.png"
 import g2Shimmer210 from "./assets/shimmer-png-sequences/g2-shimmer-2-10.png"
 import g2Shimmer211 from "./assets/shimmer-png-sequences/g2-shimmer-2-11.png"
 import g2Shimmer212 from "./assets/shimmer-png-sequences/g2-shimmer-2-12.png"
+import coin1 from "./assets/coin-png-sequence/coin-anim-1.png"
+import coin2 from "./assets/coin-png-sequence/coin-anim-2.png"
+import coin3 from "./assets/coin-png-sequence/coin-anim-3.png"
+import coin4 from "./assets/coin-png-sequence/coin-anim-4.png"
+import coin5 from "./assets/coin-png-sequence/coin-anim-5.png"
+import coin6 from "./assets/coin-png-sequence/coin-anim-6.png"
+import coin7 from "./assets/coin-png-sequence/coin-anim-7.png"
+import coin8 from "./assets/coin-png-sequence/coin-anim-8.png"
 
 export default [
     { name: "bg", url: bg },
@@ -108,4 +116,12 @@ export default [
     {name: "g2Shimmer210", url : g2Shimmer210},
     {name: "g2Shimmer211", url : g2Shimmer211},
     {name: "g2Shimmer212", url : g2Shimmer212},
+    {name: "coin1", url: coin1},
+    {name: "coin2", url: coin2},
+    {name: "coin3", url: coin3},
+    {name: "coin4", url: coin4},
+    {name: "coin5", url: coin5},
+    {name: "coin6", url: coin6},
+    {name: "coin7", url: coin7},
+    {name: "coin8", url: coin8}
 ];

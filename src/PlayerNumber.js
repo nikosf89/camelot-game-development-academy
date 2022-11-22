@@ -132,7 +132,7 @@ export class PlayerNumber{
                     this.holder1Sprite.zIndex = 2;
                     this.container.addChild(this.holder1Sprite);
 
-                    if (Math.random() < 0.01){
+                    if (Math.random() < 0.05){
                         this.number = null;
                         this.symbol = Math.floor(Math.random() * 3 + 1);
                         this.symbolSprite = new PIXI.Sprite(Globals.resources[`symbol${this.symbol}`].texture);
@@ -232,26 +232,66 @@ export class PlayerNumber{
                 if (Globals.playerBoxesPressed === 24){
                     setTimeout(()=> {
                         if (Globals.moneyWon === 0){
-                            const animation = gsap.to(Globals.mainScene.gameHolderContainer, {x: -2000, duration: 2, onComplete: this.onLoss});
+                            this.animation = gsap.to(Globals.mainScene.gameHolderContainer, {x: -2000, duration: 2, onComplete: this.onLoss});
                             Globals.mainScene.infoSprite.destroy();
                         }
                         else{
-                            const animation = gsap.to(Globals.mainScene.gameHolderContainer, {x: -2000, duration: 2, onComplete: this.onWin});
-                            Globals.mainScene.infoSprite.destroy();
-                        }
+                            this.animation = gsap.to(Globals.mainScene.gameHolderContainer, {x: -2000, duration: 2, onComplete: () => {
+                                Globals.mainScene.gameHolderContainer.destroy();
+                                Globals.mainScene.finish = new PIXI.Sprite(Globals.resources.finish.texture);
+                                Globals.mainScene.container.addChild(Globals.mainScene.finish);
+                                Globals.mainScene.finish.anchor.set(0.5)
+                                Globals.mainScene.finish.x = Globals.centerX;
+                                Globals.mainScene.finish.y = Globals.height - 100;
 
-                    }, 2000)
+                                if (Globals.moneyWon > 0 && Globals.moneyWon <= 20){
+                                    this.winMessage = new PIXI.Sprite(Globals.resources.esText1.texture);
+                                }
+
+                                else if (Globals.moneyWon > 20 && Globals.moneyWon <= 300){
+                                    this.winMessage = new PIXI.Sprite(Globals.resources.esText2.texture);
+                                }
+
+                                else if (Globals.moneyWon > 300 && Globals.moneyWon <= 6000){
+                                    this.winMessage = new PIXI.Sprite(Globals.resources.esText3.texture);
+                                }
+
+                                else if (Globals.moneyWon > 6000 && Globals.moneyWon <= 200000){
+                                    this.winMessage = new PIXI.Sprite(Globals.resources.esText4.texture);
+                                }
+
+                                else{
+                                    this.winMessage = new PIXI.Sprite(Globals.resources.esText5.texture);
+                                }
+
+                                this.winMessage.anchor.set(0.5, 1);
+                                this.winMessage.x = Globals.centerX;
+                                this.winMessage.y = Globals.centerY;
+                                Globals.mainScene.container.addChild(this.winMessage);
+
+                                this.moneyWonText = new PIXI.Text("€" + String(Globals.moneyWon));
+                                this.moneyWonText.style = {
+                                    fontSize: 150,
+                                    fill: 0xFFBF00,
+                                    align: "center",
+                                    fontFamily: "Helvetica"
+                                };
+                                this.moneyWonText.anchor.set(0.5, 0);
+                                this.moneyWonText.x = Globals.centerX;
+                                this.moneyWonText.y = Globals.centerY;
+                                Globals.mainScene.container.addChild(this.moneyWonText);
+
+                                this.coinFalling();
+                                }});
+                                Globals.mainScene.infoSprite.destroy();
+                            }
+
+                            }, 2000)
 
                 }
-
-
-
             }
 
-
         })
-
-
     }
 
     onLoss(){
@@ -267,55 +307,6 @@ export class PlayerNumber{
         Globals.mainScene.finish.anchor.set(0.5)
         Globals.mainScene.finish.x = Globals.centerX;
         Globals.mainScene.finish.y = Globals.height - 100;
-    }
-
-
-
-    onWin(){
-        Globals.mainScene.gameHolderContainer.destroy();
-        Globals.mainScene.finish = new PIXI.Sprite(Globals.resources.finish.texture);
-        Globals.mainScene.container.addChild(Globals.mainScene.finish);
-        Globals.mainScene.finish.anchor.set(0.5)
-        Globals.mainScene.finish.x = Globals.centerX;
-        Globals.mainScene.finish.y = Globals.height - 100;
-
-        if (Globals.moneyWon > 0 && Globals.moneyWon <= 20){
-            this.winMessage = new PIXI.Sprite(Globals.resources.esText1.texture);
-        }
-
-        else if (Globals.moneyWon > 20 && Globals.moneyWon <= 300){
-            this.winMessage = new PIXI.Sprite(Globals.resources.esText2.texture);
-        }
-
-        else if (Globals.moneyWon > 300 && Globals.moneyWon <= 6000){
-            this.winMessage = new PIXI.Sprite(Globals.resources.esText3.texture);
-        }
-
-        else if (Globals.moneyWon > 6000 && Globals.moneyWon <= 200000){
-            this.winMessage = new PIXI.Sprite(Globals.resources.esText4.texture);
-        }
-
-        else{
-            this.winMessage = new PIXI.Sprite(Globals.resources.esText5.texture);
-        }
-
-        this.winMessage.anchor.set(0.5, 1);
-        this.winMessage.x = Globals.centerX;
-        this.winMessage.y = Globals.centerY;
-        Globals.mainScene.container.addChild(this.winMessage);
-
-        this.moneyWonText = new PIXI.Text("€" + String(Globals.moneyWon));
-        this.moneyWonText.style = {
-            fontSize: 150,
-            fill: 0xffffff,
-            align: "center",
-            fontFamily: "Helvetica"
-        };
-        this.moneyWonText.anchor.set(0.5, 0);
-        this.moneyWonText.x = Globals.centerX;
-        this.moneyWonText.y = Globals.centerY;
-        Globals.mainScene.container.addChild(this.moneyWonText);
-            
     }
 
 
@@ -339,5 +330,36 @@ export class PlayerNumber{
         shimmer.play();
     
     }
+
+
+    coinFalling(){
+        let duration = 0;
+        const coinArray = [];
+        for (let i=1; i<=8; i++){
+            coinArray.push(Globals.resources[`coin${i}`].texture);
+        }
+        this.coinAnimation = setInterval(() => {
+            if (duration >= 10000){
+                return;
+            }
+            const coinSprite = new PIXI.AnimatedSprite(coinArray);
+            Globals.mainScene.container.addChild(coinSprite);
+            const min = 0;
+            const max = Globals.width;
+            const y = -20;
+            const x = Math.floor(Math.random() * (max - min + 1) + min);
+            coinSprite.x = x;
+            coinSprite.anchor.set(1, 0);
+            coinSprite.loop = true;
+            coinSprite.animationSpeed = 0.1;
+            coinSprite.play();
+            gsap.to(coinSprite, {y: Globals.height, duration: 5, onComplete: () => {
+                coinSprite.destroy();
+            }})
+            duration += 400;
+        }, 400);
+
+    }
+
 
 }
