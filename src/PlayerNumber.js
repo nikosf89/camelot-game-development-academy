@@ -132,7 +132,7 @@ export class PlayerNumber{
                     this.holder1Sprite.zIndex = 2;
                     this.container.addChild(this.holder1Sprite);
 
-                    if (Math.random() < 0.01){
+                    if (Math.random() < 0.05){
                         this.number = null;
                         this.symbol = Math.floor(Math.random() * 3 + 1);
                         this.symbolSprite = new PIXI.Sprite(Globals.resources[`symbol${this.symbol}`].texture);
