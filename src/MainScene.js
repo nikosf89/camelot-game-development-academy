@@ -29,12 +29,6 @@ export class MainScene{
         this.container.on("mouseup", this.resetTimer, this);
         this.container.on("pointerdown", this.resetTimer, this);
         
-        // window.onload = this.resetTimer;
-		// window.onmousemove = this.resetTimer;
-		// window.onmousedown = this.resetTimer;
-		// window.ontouchstart = this.resetTimer;
-		// window.onclick = this.resetTimer;
-		// window.onkeypress = this.resetTimer;
     }
 
     createLogoGame(){

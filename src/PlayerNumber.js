@@ -353,7 +353,7 @@ export class PlayerNumber{
             coinSprite.loop = true;
             coinSprite.animationSpeed = 0.1;
             coinSprite.play();
-            gsap.to(coinSprite, {y: Globals.height, duration: 5, onComplete: () => {
+            gsap.to(coinSprite, {y: Globals.height + 50, duration: 5, onComplete: () => {
                 coinSprite.destroy();
             }})
             duration += 400;
