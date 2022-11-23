@@ -54,6 +54,7 @@ export default class App {
         Globals.playerBoxesPressed = 0;
         Globals.moneyWon = 0;
         Globals.winningNumbers = [];
+        Globals.playerNumbers = [];
 
         //The mainscene object container contains everything on the screen except background.
         Globals.mainScene = new MainScene();

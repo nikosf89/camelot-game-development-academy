@@ -2,7 +2,10 @@ import * as PIXI from "pixi.js-legacy";
 import {Globals} from "./Globals";
 import { WinningNumber } from "./WinningNumber";
 import { PlayerNumber } from "./PlayerNumber";
+import gsap from "gsap";
 
+let timer = 0
+let isActive = true;
 
 export class MainScene{
 
@@ -11,7 +14,7 @@ export class MainScene{
         this.container.x = 0;
         this.container.y = 0;
         this.container.interactive = true;
-
+        
         this.createLogoGame();
         this.createBgSides();
         this.createInfo();
@@ -19,6 +22,19 @@ export class MainScene{
         this.createSettings();
         this.createWinningNumbers();
         this.createPlayerNumbers();
+
+        this.tl1  = gsap.timeline();
+        this.tl2 = gsap.timeline();
+        this.container.on("mousemove", this.resetTimer, this);
+        this.container.on("mouseup", this.resetTimer, this);
+        this.container.on("pointerdown", this.resetTimer, this);
+        
+        // window.onload = this.resetTimer;
+		// window.onmousemove = this.resetTimer;
+		// window.onmousedown = this.resetTimer;
+		// window.ontouchstart = this.resetTimer;
+		// window.onclick = this.resetTimer;
+		// window.onkeypress = this.resetTimer;
     }
 
     createLogoGame(){
@@ -103,10 +119,58 @@ export class MainScene{
             for (let j=0; j<3; j++){
                 let numBox = new PlayerNumber(65*(2*i + 1) , 300 + (2*j+1)*50)
                 this.playerNumbersContainer.addChild(numBox.container);
+                Globals.playerNumbers.push(numBox);
                 
             }
         }
 
     }
+
+    resetTimer(){
+        clearInterval(timer);
+        this.tl1.kill();
+        this.tl2.kill();
+        Globals.winningNumbers.forEach((elem) => {
+            if (!elem.isPressed && elem.isAnimate)
+                elem.numberBoxSprite.scale.set(1)
+        })
+        Globals.playerNumbers.forEach((elem) => {
+            if (!elem.isPressed && elem.isAnimate)
+                elem.numberBoxSprite.scale.set(1);
+        })
+        if (Globals.playerBoxesPressed < 24){    
+            clearInterval(timer);
+            this.tl1 = gsap.timeline();
+            this.tl2 = gsap.timeline();
+            timer = setInterval(() => {
+                    Globals.winningNumbers.forEach((elem) => {
+                        if (!elem.isPressed){
+                            this.tl1.to(elem.numberBoxSprite, {duration: 1, onStart: () => {
+                            elem.numberBoxSprite.scale.set(1.1);
+                            elem.isAnimate = true;
+                            }, onComplete: () => {
+                                elem.numberBoxSprite.scale.set(1);
+                                elem.isAnimate = false;
+                            }});
+                            
+                        }
+                    })
+                Globals.playerNumbers.forEach((elem) => {
+                    if (!elem.isPressed){
+                        this.tl2.to(elem.numberBoxSprite, {duration: 1, onStart: () => {
+                            elem.numberBoxSprite.scale.set(1.1);
+                            elem.isAnimate = true;
+                            }, onComplete: () => {
+                                elem.numberBoxSprite.scale.set(1);
+                                elem.isAnimate = false;
+                            }});
+                    }
+                })
+                }, 10000);
+        }    
+    
+    }
+
+
 
 }
