@@ -125,11 +125,11 @@ export class MainScene{
         this.tl1.kill();
         this.tl2.kill();
         Globals.winningNumbers.forEach((elem) => {
-            if (!elem.isPressed && elem.isAnimate)
+            if (!elem.isPressed && elem.isAnimate && !elem.hover)
                 elem.numberBoxSprite.scale.set(1)
         })
         Globals.playerNumbers.forEach((elem) => {
-            if (!elem.isPressed && elem.isAnimate)
+            if (!elem.isPressed && elem.isAnimate && !elem.hover)
                 elem.numberBoxSprite.scale.set(1);
         })
         if (Globals.playerBoxesPressed < 24){    

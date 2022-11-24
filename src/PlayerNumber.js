@@ -14,6 +14,7 @@ export class PlayerNumber{
         this.container.sortableChildren = true;
         this.numberBoxSprite = new PIXI.Sprite(Globals.resources.boxBase2.texture);
         this.isPressed = false;
+        this.hover = false;
 
         this.container.x = x;
         this.container.y = y;
@@ -56,6 +57,7 @@ export class PlayerNumber{
     onHover(){ 
         this.numberBoxSprite.on("pointerover", () => {
             if (!this.isPressed){
+                this.hover = true;
                 this.hilight = new PIXI.Sprite(Globals.resources.boxHilight.texture);
                 this.container.addChild(this.hilight);
                 this.hilight.anchor.set(0.5)
@@ -90,6 +92,7 @@ export class PlayerNumber{
     onout(){
         this.numberBoxSprite.on("pointerout", () => {
             if (!this.isPressed){
+                this.hover = false;
                 this.hilight.destroy();
                 this.numberBoxSprite.scale.set(1);
                 clearInterval(this.particleAnimation);
