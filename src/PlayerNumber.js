@@ -135,7 +135,7 @@ export class PlayerNumber{
                     this.holder1Sprite.zIndex = 2;
                     this.container.addChild(this.holder1Sprite);
 
-                    if (Math.random() < 0.05){
+                    if (Math.random() < 0.01){
                         this.number = null;
                         this.symbol = Math.floor(Math.random() * 3 + 1);
                         this.symbolSprite = new PIXI.Sprite(Globals.resources[`symbol${this.symbol}`].texture);
@@ -175,7 +175,9 @@ export class PlayerNumber{
                         this.holder1WonSprite.width = this.holder1Sprite.width;
                         this.holder1WonSprite.height = this.holder1Sprite.height;
                         this.holder1WonSprite.scale.set(0.9);
+                        this.prizeAmountText.style = {fill: 0xffff00, fontSize: 20};
                         if (this.symbol === 1){
+                            this.prizeAmountText.text = "€50"; 
                             Globals.moneyWon += 50;
                         }
 
@@ -196,6 +198,8 @@ export class PlayerNumber{
                             if (elem.number === this.number){
                                 Globals.moneyWon += Number(this.prizeAmount);
                                 
+                                this.numberText.style = {fill: 0xffff00, fontSize: 50};
+                                this.prizeAmountText.style = {fill: 0xffff00, fontSize: 20};
                                 this.holder1WonSprite = new PIXI.Sprite(Globals.resources.holder1Won.texture);
                                 this.container.addChild(this.holder1WonSprite);
                                 this.holder1WonSprite.anchor.set(0.5);
@@ -209,6 +213,7 @@ export class PlayerNumber{
 
                                 this.holder1WonSprite2 = new PIXI.Sprite(Globals.resources.holder1Won.texture);
                                 elem.container.addChild(this.holder1WonSprite2);
+                                elem.numberText.style = {fill: 0xffff00, fontSize: 60};
                                 this.shimmerAnimation(elem.container)
                                 this.holder1WonSprite2.anchor.set(0.5);
                                 this.holder1WonSprite2.x = elem.numberText.x;
